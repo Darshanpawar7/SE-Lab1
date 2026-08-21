@@ -4,6 +4,9 @@
 **Lab 1: Requirements Engineering & UML Use-Case Modelling**
 **Problem Statement #17 | Healthcare & Telemedicine**
 
+**NAME: DARSHAN P PAWAR**
+**SRN: PES2UG24CS143**
+**SECTION: C**
 ---
 
 ## Problem Context & Overview
@@ -21,8 +24,17 @@ verifiable QR digital vaccination certificates.
 | # | Deliverable | Location |
 |---|-------------|----------|
 | 1 | Complete Requirements Table (FR-001 to FR-005, NFR-001 & NFR-002) | [requirements/requirements.md](requirements/requirements.md) |
-| 2 | UML Use-Case Diagram (with `<<include>>` and `<<extend>>`) | [uml/use-case-diagram.png](uml/use-case-diagram.png) |
+| 2 | UML Use-Case Diagram (with `«include»` and `«extend»`) | [uml/use-case-diagram.png](uml/use-case-diagram.png) |
 | 3 | Use-Case Flow Specification (UC-01: Book Vaccination Slot) | [use-case-flow/book-vaccination-slot.md](use-case-flow/book-vaccination-slot.md) |
+
+---
+
+## UML Use-Case Diagram
+
+![UML use-case diagram for the Vaccination Cohort & Dose Scheduling System, showing the Citizen Registrant and Vaccination Officer actors, nine use cases inside the system boundary, two include relationships into Check Dose Eligibility, and one extend relationship onto View Vaccination Certificate](uml/use-case-diagram.png)
+
+Editable source: [uml/use-case-diagram.drawio](uml/use-case-diagram.drawio) — open at
+[app.diagrams.net](https://app.diagrams.net/).
 
 ---
 
@@ -47,8 +59,10 @@ verifiable QR digital vaccination certificates.
 ## Summary of the Model
 
 **Actors**
-- **Citizen Registrant** — registers, books vaccination slots, views status and certificate.
-- **Vaccination Officer** — manages centre slots, records administered doses, generates and verifies certificates.
+- **Citizen Registrant** — registers and maintains a profile, books vaccination slots, views and
+  downloads the vaccination certificate, and can verify a QR certificate.
+- **Vaccination Officer** — manages centre slots, records administered doses, generates
+  certificates, and verifies QR certificates.
 
 **Key relationships modelled**
 - `Book Vaccination Slot` **«include»** `Check Dose Eligibility` — the 28-day minimum dose

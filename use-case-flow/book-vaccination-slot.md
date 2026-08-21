@@ -86,20 +86,14 @@ the citizen's vaccination record is unchanged.
 
 ## Notes
 
-**Why the eligibility check is an `«include»`.** Step 4 runs on *every* execution of this use
-case — there is no path from step 3 to step 6 that skips it. That unconditional dependency is
-exactly what the `«include»` relationship expresses in the use-case diagram, and it is what
-prevents an unsafe early dose from ever being booked. Modelling it as an `«extend»` would
-wrongly imply the safety check is optional.
-
-**The same check is shared with the Vaccination Officer.** `Check Dose Eligibility` is also
-`«include»`d by the officer's *Record Vaccination Dose* use case, so the interval rule is
-re-evaluated before the vaccine is physically administered — a booking made legitimately in
-advance can still turn out to be invalid if the earlier dose is later back-dated or corrected.
-That shared `«include»` is what connects the Citizen Registrant's and Vaccination Officer's use
-cases into one model rather than two independent halves.
+**Why the eligibility check is an `«include»`.** Step 4 runs on *every* execution — no path from
+step 3 to step 6 skips it. That unconditional dependency is what `«include»` expresses; an
+`«extend»` would wrongly imply the safety check is optional. The same use case is also
+`«include»`d by the officer's *Record Vaccination Dose*, so the interval rule is re-checked
+before the vaccine is administered. That shared `«include»` is what joins both actors' use cases
+into one connected model.
 
 **Relationship to FR-003.** Alternate flow A1 is the runtime behaviour of FR-003's acceptance
-criterion *"Pass: Dose 2 booking is blocked if the interval since Dose 1 is < 28 days"*, and the
-main success scenario is the behaviour of *"Pass: Dose 2 booking is permitted once 28 days or
-more have elapsed."*
+criterion *"Dose 2 booking is blocked if the interval since Dose 1 is < 28 days"*; the main
+success scenario is the behaviour of *"Dose 2 booking is permitted once 28 days or more have
+elapsed."*
