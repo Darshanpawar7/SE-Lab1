@@ -53,10 +53,20 @@ verifiable QR digital vaccination certificates.
 **Key relationships modelled**
 - `Book Vaccination Slot` **«include»** `Check Dose Eligibility` — the 28-day minimum dose
   interval check is *mandatory* on every booking attempt (traces to **FR-003**).
-- `Record Vaccination Dose` **«include»** `Generate Vaccination Certificate` — recording a dose
-  mandatorily issues the certificate for the completed schedule (traces to **FR-005**).
+- `Record Vaccination Dose` **«include»** `Check Dose Eligibility` — the same check is
+  *mandatory* again before a dose is physically administered (traces to **FR-003**).
 - `Download QR Certificate` **«extend»** `View Vaccination Certificate` — downloading the
   signed QR certificate is *optional* behaviour on top of viewing it (traces to **FR-005**).
+
+**How the two actors' use cases connect**
+
+The diagram is a single connected model, not two separate halves:
+
+- `Check Dose Eligibility` is a **shared included use case** — reached by `«include»` from the
+  citizen's `Book Vaccination Slot` *and* from the officer's `Record Vaccination Dose`. Factoring
+  common behaviour out of two use cases is exactly what `«include»` exists for.
+- `Verify QR Certificate` is a **shared use case** associated with *both* actors — a citizen can
+  check their own certificate and an officer can verify one at a checkpoint.
 
 ---
 

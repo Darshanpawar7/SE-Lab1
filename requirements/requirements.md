@@ -98,8 +98,8 @@ crowding at vaccination sites and lets officers plan vaccine stock per session.
 |---|---|
 | **Type** | Functional — Business Rule |
 | **Priority** | High |
-| **Actor** | Citizen Registrant (enforced by the system) |
-| **Use case** | Check Dose Eligibility — `«include»` of Book Vaccination Slot |
+| **Actors** | Citizen Registrant, Vaccination Officer (enforced by the system for both) |
+| **Use case** | Check Dose Eligibility — `«include»` of Book Vaccination Slot *and* of Record Vaccination Dose |
 
 **Description.** The system shall enforce dose interval rules (e.g. minimum 28 days after Dose 1)
 before unlocking Dose 2 booking for a citizen. The interval shall be configurable per vaccine
@@ -112,8 +112,11 @@ type rather than hard-coded.
 - **Fail:** an early vaccination slot is confirmed.
 
 **Rationale.** A second dose given too early is clinically ineffective and potentially unsafe.
-Because the rule is safety-critical, it is enforced centrally on every booking attempt — modelled
-as a mandatory `«include»` rather than an optional check — so it cannot be bypassed.
+Because the rule is safety-critical, it is enforced centrally rather than left to staff
+discretion, and it is checked at **both** points where an invalid dose could slip through: when
+the citizen reserves an appointment, and again when the officer records the dose as administered.
+Modelling it as a shared mandatory `«include»` from both use cases — rather than an optional
+check on one — is what makes it impossible to bypass from either direction.
 
 ---
 
@@ -250,26 +253,41 @@ diagram is labelled with the requirement it satisfies.
 |---|---|---|---|---|
 | 1 | FR-001 | Register / Maintain Profile | Citizen Registrant | association |
 | 2 | FR-002 | Book Vaccination Slot | Citizen Registrant | association |
-| 3 | FR-003 | Check Dose Eligibility | — | **`«include»`** from Book Vaccination Slot |
+| 3 | FR-003 | Check Dose Eligibility | — | **`«include»`** from Book Vaccination Slot **and** from Record Vaccination Dose |
 | 4 | FR-005 | View Vaccination Certificate | Citizen Registrant | association |
 | 5 | FR-005 | Download QR Certificate | — | **`«extend»`** onto View Vaccination Certificate |
 | 6 | FR-002 | Manage Vaccination Slots | Vaccination Officer | association |
 | 7 | FR-004 | Record Vaccination Dose | Vaccination Officer | association |
-| 8 | FR-005 | Generate Vaccination Certificate | — | **`«include»`** from Record Vaccination Dose |
-| 9 | FR-005, NFR-001 | Verify QR Certificate | Vaccination Officer | association |
+| 8 | FR-005 | Generate Vaccination Certificate | Vaccination Officer | association |
+| 9 | FR-005, NFR-001 | Verify QR Certificate | **both actors** | association to Citizen Registrant **and** Vaccination Officer |
 | — | NFR-002 | *(cross-cutting)* | both | applies to all record-handling use cases |
 
-All nine use cases in the diagram appear in this table, and every one is connected — each has at
-least one association to an actor or one `«include»`/`«extend»` relationship to another use case.
-There are no floating use cases.
+---
+
+### 5.1 How the two actors' use cases are connected
+
+The model is a **single connected graph** — not two independent halves that happen to share a
+system boundary. Starting from either actor, every use case is reachable. Two relationships do
+that work:
+
+**Shared included use case — `Check Dose Eligibility`.**
+It is `«include»`d from the citizen's `Book Vaccination Slot` *and* from the officer's
+`Record Vaccination Dose`. The interval rule must hold at two distinct moments: when an
+appointment is reserved, and again before the vaccine is physically administered — a booking made
+legitimately in advance can still become invalid if the earlier dose is back-dated or corrected.
+Factoring that common behaviour out of two use cases owned by two different actors is precisely
+what `«include»` is for, and it is what links the two halves of the diagram.
+
+**Shared use case — `Verify QR Certificate`.**
+Associated with *both* actors: a Citizen Registrant verifies their own certificate before
+travelling, and a Vaccination Officer verifies a presented certificate at a checkpoint. Same
+system behaviour, two initiating actors, one use case.
 
 **Why `«include»` for FR-003 and `«extend»` for FR-005.**
-`Check Dose Eligibility` is `«include»`d because the interval rule must run on *every* booking
-attempt — it is unconditional, and modelling it as optional would let an unsafe booking through.
-`Generate Vaccination Certificate` is likewise `«include»`d because recording a dose always
-issues or reissues the certificate. `Download QR Certificate` is an `«extend»` because a citizen
-may view a certificate on screen without ever downloading it — that behaviour is conditional on
-the citizen requesting a copy.
+`Check Dose Eligibility` is `«include»`d because the interval rule is unconditional — modelling
+it as optional would let an unsafe booking through. `Download QR Certificate` is an `«extend»`
+because a citizen may view a certificate on screen without ever downloading it, so that behaviour
+is conditional on the citizen requesting a copy.
 
 ---
 
