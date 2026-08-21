@@ -1,7 +1,8 @@
 # UC-01: Book Vaccination Slot
 
-**Vaccination Cohort & Dose Scheduling System** — Use-Case Flow Specification
-PES University — Dept. of CSE | Lab 1 | Problem Statement #17
+**Vaccination Cohort & Dose Scheduling System** — Use-Case Flow Specification<br>
+PES University — Dept. of CSE | Lab 1 | Problem Statement #17<br>
+Darshan P Pawar — PES2UG24CS143 — Section C
 
 | Attribute | Value |
 |---|---|

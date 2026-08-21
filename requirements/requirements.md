@@ -2,9 +2,10 @@
 
 **Vaccination Cohort & Dose Scheduling System**
 
-PES University — Dept. of CSE
-Lab 1: Requirements Engineering & UML Use-Case Modelling
-Problem Statement #17 | Healthcare & Telemedicine
+PES University — Dept. of CSE<br>
+Lab 1: Requirements Engineering & UML Use-Case Modelling<br>
+Problem Statement #17 | Healthcare & Telemedicine<br>
+Darshan P Pawar — PES2UG24CS143 — Section C
 
 ---
 
