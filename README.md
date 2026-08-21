@@ -51,11 +51,11 @@ verifiable QR digital vaccination certificates.
 - **Vaccination Officer** — manages centre slots, records administered doses, generates and verifies certificates.
 
 **Key relationships modelled**
-- `Book Vaccination Slot` **<<include>>** `Check Dose Eligibility` — the 28-day minimum dose
+- `Book Vaccination Slot` **«include»** `Check Dose Eligibility` — the 28-day minimum dose
   interval check is *mandatory* on every booking attempt (traces to **FR-003**).
-- `Record Vaccination Dose` **<<include>>** `Update Vaccination Record` — every administered
-  dose mandatorily updates the citizen's vaccination history (traces to **FR-004**).
-- `Download QR Certificate` **<<extend>>** `View Vaccination Certificate` — downloading the
+- `Record Vaccination Dose` **«include»** `Generate Vaccination Certificate` — recording a dose
+  mandatorily issues the certificate for the completed schedule (traces to **FR-005**).
+- `Download QR Certificate` **«extend»** `View Vaccination Certificate` — downloading the
   signed QR certificate is *optional* behaviour on top of viewing it (traces to **FR-005**).
 
 ---
